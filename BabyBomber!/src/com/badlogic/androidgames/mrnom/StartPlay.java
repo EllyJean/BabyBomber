@@ -3,33 +3,23 @@ package com.badlogic.androidgames.mrnom;
 import java.util.List;
 
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Point;
-import android.media.MediaPlayer;
-import android.net.Uri;
+
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Graphics;
 import com.badlogic.androidgames.framework.Input.TouchEvent;
 import com.badlogic.androidgames.framework.Screen;
 
-public class MainMenuScreen extends Screen 
+public class StartPlay extends Screen 
 {
 
-	public boolean isFirst = false;
-	//MediaPlayer mediaPlayer = new MediaPlayer();
-	
-	Point p;
+
 	
 
 	
-    public MainMenuScreen(Game game) 
-    {
-    	
+    public StartPlay(Game game) 
+    {   	
         super(game); 
-       
+            
     }   
 
     public void update(float deltaTime) 
@@ -38,15 +28,7 @@ public class MainMenuScreen extends Screen
         List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
         game.getInput().getKeyEvents(); 
         
-        if(isFirst!=true)
-        {
-        	//Uri path = Uri.parse("android.resource://com.badlogic.androidgames.mrnon/raw/bloodySunday");
-			//mediaPlayer.create(this, path);
-        	//Assets.U2.play(1);
-        	//Assets.U2.play();
-        	//Assets.U2.isLooping();
-        	isFirst = true;
-        }
+       
         
         int len = touchEvents.size();
         for(int i = 0; i < len; i++) 
@@ -62,7 +44,7 @@ public class MainMenuScreen extends Screen
                 }
                 if(inBounds(event, 64, 220, 192, 42) ) 
                 {                	                	                            	
-                    game.setScreen(new StartPlay(game));
+                    game.setScreen(new GameScreen(game));
                     if(Settings.soundEnabled)
                         Assets.click.play(1);
                     return;
@@ -94,7 +76,7 @@ public class MainMenuScreen extends Screen
         
         g.drawPixmap(Assets.background, 0, 0);
         g.drawPixmap(Assets.logo, 32, 20);
-        g.drawPixmap(Assets.mainMenu, 64, 220);
+        g.drawPixmap(Assets.start_play, 60, 220);
         if(Settings.soundEnabled)
             g.drawPixmap(Assets.sound, 0, 416);
         else
@@ -116,6 +98,7 @@ public class MainMenuScreen extends Screen
 
     }
     
+   
+    
     
 }
-

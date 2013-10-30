@@ -1,7 +1,13 @@
 package com.badlogic.androidgames.framework;
 
-public abstract class Screen {
+
+
+
+
+public abstract class Screen 
+{
     protected final Game game;
+    public int Score;
 
     public Screen(Game game) {
         this.game = game;

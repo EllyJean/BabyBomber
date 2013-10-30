@@ -21,27 +21,24 @@ public class LoadingScreen extends Screen
         Assets.gameBackground = g.newPixmap("gameBackground.png", PixmapFormat.RGB565);
         Assets.logo = g.newPixmap("logo.png", PixmapFormat.ARGB4444);
         Assets.mainMenu = g.newPixmap("mainmenu.png", PixmapFormat.ARGB4444);
- 
+        Assets.start_play = g.newPixmap("Start_Play.png", PixmapFormat.ARGB4444);
+        Assets.numbers = g.newPixmap("numbers.png", PixmapFormat.ARGB4444);
         Assets.help1 = g.newPixmap("help1.png", PixmapFormat.ARGB4444);
         Assets.help2 = g.newPixmap("help2.png", PixmapFormat.ARGB4444);
         Assets.help3 = g.newPixmap("help3.png", PixmapFormat.ARGB4444);
- 
         Assets.ready = g.newPixmap("ready.png", PixmapFormat.ARGB4444);
         Assets.pause = g.newPixmap("pausemenu.png", PixmapFormat.ARGB4444);
         Assets.pause1 = g.newPixmap("pause.png", PixmapFormat.ARGB4444);
-        Assets.gameOver = g.newPixmap("gameover.png", PixmapFormat.ARGB4444);
-       
+        Assets.gameOver = g.newPixmap("gameover.png", PixmapFormat.ARGB4444);      
         Assets.left= g.newPixmap("left_button.png", PixmapFormat.ARGB4444);
         Assets.babyCanon= g.newPixmap("babyCanon.png", PixmapFormat.ARGB4444);
         Assets.poopyDiaper= g.newPixmap("poopyDiaper.png", PixmapFormat.ARGB4444);
         Assets.teddyBear= g.newPixmap("teddyBear.png", PixmapFormat.ARGB4444);
         Assets.credits= g.newPixmap("credits.png", PixmapFormat.ARGB4444);
-        Assets.exit= g.newPixmap("exit_button.png", PixmapFormat.ARGB4444);
-      
+        Assets.exit= g.newPixmap("exit_button.png", PixmapFormat.ARGB4444);     
         Assets.right = g.newPixmap("right_button.png", PixmapFormat.ARGB4444);
         Assets.up = g.newPixmap("up_button.png", PixmapFormat.ARGB4444);
         Assets.down = g.newPixmap("down_button.png", PixmapFormat.ARGB4444);
-
         Assets.sound = g.newPixmap("sound.png", PixmapFormat.ARGB4444);
         Assets.noSound = g.newPixmap("no_sound.png", PixmapFormat.ARGB4444);
         Assets.click = game.getAudio().newSound("click.ogg");

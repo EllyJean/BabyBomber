@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Random;
 import java.lang.Object;
 
+import android.R.color;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.Log;
 
 import com.badlogic.androidgames.framework.Game;
@@ -24,32 +28,25 @@ public class GameScreen extends Screen
     }
     
     GameState state = GameState.Ready;
-    World world;
-    int oldScore = 0;
-    String score = "0";
-    int current;
-	int previous;
+    World world;    
 	boolean isUp = false, onceThrough = false;
-	int newX, newY, deltaX, deltaY, oldX = 0, oldY = 0, OrigiinX, OriginY;
+	int X, Y, tempVelX, tempVelY, tempX, tempY, current, previous,score = 0, oldScore = 0;
+	int newX, newY, deltaX, deltaY, oldX = 0, oldY = 0, OrigiinX, OriginY, babyX, babyY;
 	public List<Projectile> bullets = new ArrayList<Projectile>();
 	public List<enemy> clowns = new ArrayList<enemy>();
-	public List<Particle> hitExplosion = new ArrayList<Particle>();
-	public int babyX, babyY;
-	public Pixmap headPixmap;
-	public Pixmap particle = Assets.poopyDiaper;
+	public List<Particle> hitExplosion = new ArrayList<Particle>(); 
+	public Pixmap headPixmap, particle = Assets.poopyDiaper;
 	Random generator = new Random();
-	int X;
-	int Y;
-	int tempVelX;
-	int tempVelY;
-	int tempX;
-	int tempY;
-	
+	String scoreString= "0";
+	Canvas canvas = new Canvas();
+	Paint paint;
+	Typeface font;
     
     public GameScreen(Game game) 
     {
         super(game);
         world = new World();
+
         
     }
 
@@ -92,7 +89,7 @@ public class GameScreen extends Screen
             {
             	isUp = false;
             }
-            //current = event.type;
+
             if(event.type == TouchEvent.TOUCH_UP) 
             {
                 if(event.x < 64 && event.y < 64) 
@@ -104,12 +101,8 @@ public class GameScreen extends Screen
                 }
             }
             if(event.type == TouchEvent.TOUCH_UP) 
-            {   
-            	
-               
-               bullets.add(new Projectile(event.x, event.y, babyX, babyY));
-                             
-               
+            {              	              
+               bullets.add(new Projectile(event.x, event.y, babyX, babyY));                                         
             }
             else
             {
@@ -124,16 +117,15 @@ public class GameScreen extends Screen
                 Assets.bitten.play(1);
             state = GameState.GameOver;
         }
-        if(oldScore != world.score) 
-        {
-            oldScore = world.score;
-            score = "" + oldScore;
-            if(Settings.soundEnabled)
-                Assets.eat.play(1);
-        }
         
-        //oldX = newX;
-       // oldY = newY;
+        if(oldScore != world.score)
+        {
+        	oldScore = world.score;
+        	scoreString = "" + oldScore;
+        	
+        }
+       
+       
         
         for(enemy n : clowns)
         {
@@ -150,12 +142,13 @@ public class GameScreen extends Screen
             			 tempVelY = Y;
             			 tempX = n.posX;
             			 tempY = n.posY;
-            			 Log.w("my app", String.valueOf(X)); 
+            			// Log.w("my app", String.valueOf(X)); 
             			hitExplosion.add(new Particle(particle, tempX, tempY, tempVelX, tempVelY, generator.nextInt(255)));
             			
             		}
             		n.isDead = true;
             		i.isDead = true;
+            		score++;
             	}
             }
         	n.update();
@@ -200,7 +193,8 @@ public class GameScreen extends Screen
             }
         }
 
-        
+       scoreString = String.valueOf(score);
+       
     }
 
     private void updatePaused(List<TouchEvent> touchEvents) 
@@ -263,16 +257,18 @@ public class GameScreen extends Screen
         if(state == GameState.GameOver)
             drawGameOverUI();
         
-        drawText(g, score, g.getWidth() / 2 - score.length()*20 / 2, g.getHeight() - 42);
+        
+       
+        drawText(g, scoreString, g.getWidth() / 4 - scoreString.length() * 20 / 2, g.getHeight() - g.getHeight()/8);
     }
 
     private void drawWorld(World world) 
     {
         Graphics g = game.getGraphics();
-        StayPuft staypuft = world.staypuft;
         //StayPuftPart head = staypuft.parts.get(0);
         int screenWidth = g.getWidth();
         int screenHeight = g.getHeight();
+        //canvas.drawRGB(0, 0, 0);
                
         headPixmap = Assets.babyCanon;
       
@@ -307,6 +303,10 @@ public class GameScreen extends Screen
         	
         	i.draw(g);
         }
+        
+        //canvas.drawText("scorwe",100, 100, paint);
+        //drawText(g, scoreString, 50, 50);
+        //canvas.drawText(scoreString, 50.0f, 50.0f, paint);
     }
 
     private void drawReadyUI() 
@@ -349,17 +349,20 @@ public class GameScreen extends Screen
                 continue;
             }
 
+            int srcX = 0;
             int srcWidth = 0;
             if (character == '.') 
             {
+            	srcX = 200;
                 srcWidth = 10;
             } 
             else 
             {
+            	srcX = (character - '0') * 20;
                 srcWidth = 20;
             }
 
-
+            g.drawPixmap(Assets.numbers, x, y,srcX, 0, srcWidth, 32);
             x += srcWidth;
         }
     }
@@ -372,7 +375,7 @@ public class GameScreen extends Screen
         
         if(world.gameOver) 
         {
-            Settings.addScore(world.score);
+            //Settings.addScore(world.score);
             Settings.save(game.getFileIO());
         }
     }

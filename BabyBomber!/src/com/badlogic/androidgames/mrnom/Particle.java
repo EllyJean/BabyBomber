@@ -22,7 +22,8 @@ public class Particle
             velX = vX;
             velY = vY;
             rect = new Rect();
-            age = a;
+            //age = a;
+            age = 0;
             isAlive = true;
         }
 
